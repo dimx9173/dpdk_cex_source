@@ -1,0 +1,5 @@
+# Build options for HFT Gateway
+
+option('enable_tests', type: 'boolean', value: true, description: 'Build unit tests')
+option('enable_sanitizers', type: 'boolean', value: false, description: 'Enable Address and Undefined sanitizers')
+option('cpu_instruction_set', type: 'string', value: 'native', description: 'CPU instruction set to optimize for (e.g. native, x86-64-v3)')

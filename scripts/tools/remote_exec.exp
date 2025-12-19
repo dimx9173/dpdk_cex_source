@@ -1,0 +1,25 @@
+#!/usr/bin/expect -f
+
+set timeout 300
+set host [lindex $argv 0]
+set user [lindex $argv 1]
+set password [lindex $argv 2]
+set command [lindex $argv 3]
+
+spawn ssh -o StrictHostKeyChecking=no $user@$host $command
+expect {
+    "password:" {
+        send "$password\r"
+        exp_continue
+    }
+    timeout {
+        puts "Connection timed out"
+        exit 1
+    }
+    eof
+}
+
+lassign [wait] pid spawnid os_error_flag value
+if {$value != 0} {
+    exit $value
+}
