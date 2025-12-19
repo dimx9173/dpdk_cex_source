@@ -144,10 +144,10 @@ meson test -C build
 │   ├── modules/
 │   │   ├── exchange/   # OKX, Bybit adapters
 │   │   ├── network/    # WebSocket, UDP, TCP
-│   │   ├── strategy/   # Arbitrage engine
+│   │   ├── market_data/# OrderBook construction
 │   │   └── parser/     # simdjson wrapper
 ├── scripts/            # Deployment & utilities
-├── docs/               # Architecture, daily logs
+├── include/            # Public headers
 ├── examples/           # UDP client examples
 └── tests/              # Unit tests
 ```
