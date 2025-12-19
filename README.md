@@ -12,8 +12,6 @@ A high-frequency trading gateway using DPDK 23.11 with a Virtio-user + TAP archi
 | **Optimization**         | AVX2, simdjson parsing, lock-free ring buffers |
 | **Market Data**          | Real-time WebSocket feeds, UDP broadcast       |
 
-📖 **[Architecture Documentation](docs/ARCHITECTURE.md)** | 📝 **[Daily Logs](docs/daily/)**
-
 ---
 
 ## Quick Start
