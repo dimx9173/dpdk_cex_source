@@ -73,7 +73,19 @@ void configure_ports(struct rte_mempool *mbuf_pool) {
     rte_exit(EXIT_FAILURE, "rte_eth_tx_queue_setup: err=%d, port=%u\n", ret,
              phy_port_id);
 
-  /* Configure Virtual Port */
+  /* Start Physical Port */
+  ret = rte_eth_dev_start(phy_port_id);
+  if (ret < 0)
+    rte_exit(EXIT_FAILURE, "rte_eth_dev_start: err=%d, port=%u\n", ret,
+             phy_port_id);
+
+  /* Enable Promiscuous Mode on Physical Port */
+  ret = rte_eth_promiscuous_enable(phy_port_id);
+  if (ret < 0)
+    rte_exit(EXIT_FAILURE, "rte_eth_promiscuous_enable: err=%d, port=%u\n", ret,
+             phy_port_id);
+  printf("Promiscuous mode enabled on Physical Port %u\n", phy_port_id);
+
   if (virt_port_id != RTE_MAX_ETHPORTS) {
     printf("Configuring Virtio-User Port %u...\n", virt_port_id);
     ret = rte_eth_dev_configure(virt_port_id, 1, 1, &port_conf);
@@ -92,27 +104,12 @@ void configure_ports(struct rte_mempool *mbuf_pool) {
     if (ret < 0)
       rte_exit(EXIT_FAILURE, "rte_eth_tx_queue_setup: err=%d, port=%u\n", ret,
                virt_port_id);
-  }
 
-  /* Start Ports */
-  ret = rte_eth_dev_start(phy_port_id);
-  if (ret < 0)
-    rte_exit(EXIT_FAILURE, "rte_eth_dev_start: err=%d, port=%u\n", ret,
-             phy_port_id);
-
-  if (virt_port_id != RTE_MAX_ETHPORTS) {
     ret = rte_eth_dev_start(virt_port_id);
     if (ret < 0)
       rte_exit(EXIT_FAILURE, "rte_eth_dev_start: err=%d, port=%u\n", ret,
                virt_port_id);
   }
-
-  /* Enable Promiscuous Mode on Physical Port */
-  ret = rte_eth_promiscuous_enable(phy_port_id);
-  if (ret < 0)
-    rte_exit(EXIT_FAILURE, "rte_eth_promiscuous_enable: err=%d, port=%u\n", ret,
-             phy_port_id);
-  printf("Promiscuous mode enabled on Physical Port %u\n", phy_port_id);
 }
 
 void close_ports(void) {

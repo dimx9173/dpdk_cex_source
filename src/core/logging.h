@@ -43,4 +43,9 @@ std::ostream &get_trade_log_stream();
     }                                                                          \
   } while (0)
 
+#define LOG_ERROR(msg)                                                         \
+  do {                                                                         \
+    log_timestamp(get_system_log_stream()) << " [ERROR] " << msg << std::endl; \
+  } while (0)
+
 #endif // AERO_CORE_LOGGING_H

@@ -98,6 +98,14 @@ void OkxConnection::process_message(
     return;
   }
 
+  // 1.1 Check for Pong (OKX sends raw "pong" string)
+  if (msg == "pong") {
+      if (app_config.debug_log_enabled) {
+          LOG_SYSTEM("OkxConnection: Received pong.");
+      }
+      return;
+  }
+
   // 2. Check for Subscription Response
   if (adapter_->is_subscription_response(msg.c_str(), msg.length())) {
     // Log subscription success/fail
